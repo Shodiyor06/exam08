@@ -25,7 +25,7 @@ class IsAdminOrReadOnly(permissions.BasePermission):
 class EventViewSet(viewsets.ModelViewSet):
     """API ViewSet for Event CRUD operations"""
     
-    queryset = Event.objects.all().order_by('-created_at')
+    queryset = Event.objects.all()
     serializer_class = EventSerializer
     permission_classes = [IsAdminOrReadOnly]
 
@@ -158,3 +158,11 @@ def add_event(request):
             })
 
     return render(request, "add_event.html")
+
+
+
+def event_list(request):
+    events = Event.objects.all()
+    return render(request, "event_list.html", {
+        "events": events
+    })

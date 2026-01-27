@@ -1,0 +1,15 @@
+<h1>Eventlar</h1>
+
+{% if events %}
+    <ul>
+        {% for event in events %}
+            <li>
+                <strong>{{ event.title }}</strong><br>
+                {{ event.description }}<br>
+                {{ event.date }}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Hozircha event yo‘q</p>
+{% endif %}
