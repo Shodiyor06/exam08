@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Eventlar</h2>
+
+<ul>
+{% for event in events %}
+    <li>
+        <b>{{ event.title }}</b><br>
+        Capacity: {{ event.capacity }}
+
+        {% if event.id in registered_event_ids %}
+            <form method="post" action="/registrations/cancel/{{ event.id }}/">
+                {% csrf_token %}
+                <button type="submit">Bekor qilish</button>
+            </form>
+        {% else %}
+            <form method="post" action="/registrations/register/{{ event.id }}/">
+                {% csrf_token %}
+                <button type="submit">Ro‘yxatdan o‘tish</button>
+            </form>
+        {% endif %}
+    </li>
+    <hr>
+{% endfor %}
+</ul>
+{% endblock %}

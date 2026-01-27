@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Kirish</h2>
+
+{% if messages %}
+    {% for message in messages %}
+        <p style="color:red">{{ message }}</p>
+    {% endfor %}
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    <p>
+        Username:<br>
+        <input type="text" name="username" required>
+    </p>
+    <p>
+        Parol:<br>
+        <input type="password" name="password" required>
+    </p>
+    <button type="submit">Kirish</button>
+</form>
+
+<p>
+    Akkount yo‘qmi?
+    <a href="/register/">Ro‘yxatdan o‘tish</a>
+</p>
+{% endblock %}

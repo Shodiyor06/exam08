@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Yangi Event qo‘shish</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <p>
+        Nomi:<br>
+        <input type="text" name="title" required>
+    </p>
+    <p>
+        Capacity:<br>
+        <input type="number" name="capacity" required>
+    </p>
+    <button type="submit">Qo‘shish</button>
+</form>
+{% endblock %}

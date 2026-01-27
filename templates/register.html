@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Ro‘yxatdan o‘tish</h2>
+
+{% for message in messages %}
+<p style="color:red">{{ message }}</p>
+{% endfor %}
+
+<form method="post">
+    {% csrf_token %}
+    <p>
+        Username:<br>
+        <input type="text" name="username" required>
+    </p>
+    <p>
+        Parol:<br>
+        <input type="password" name="password1" required>
+    </p>
+    <p>
+        Parolni qayta kiriting:<br>
+        <input type="password" name="password2" required>
+    </p>
+
+    <button type="submit">Ro‘yxatdan o‘tish</button>
+</form>
+
+<p>
+    Akkount bormi?
+    <a href="/login/">Kirish</a>
+</p>
+{% endblock %}

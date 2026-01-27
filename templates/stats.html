@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Event Statistikasi</h2>
+
+<h3>1️⃣ Eventga ro‘yxatdan o‘tganlar soni</h3>
+<form method="get">
+    Event ID:
+    <input name="event_id">
+    <button type="submit">Tekshir</button>
+</form>
+
+{% if registrations_count is not None %}
+<p>Ro‘yxatdan o‘tganlar: {{ registrations_count }}</p>
+{% endif %}
+
+<hr>
+
+<h3>2️⃣ Eventdagi bo‘sh joylar</h3>
+{% if free_places is not None %}
+<p>Bo‘sh joylar: {{ free_places }}</p>
+{% endif %}
+
+<hr>
+
+<h3>3️⃣ Eng mashhur eventlar (Top 5)</h3>
+<ul>
+{% for event in top_events %}
+    <li>{{ event.title }} — {{ event.reg_count }}</li>
+{% endfor %}
+</ul>
+
+{% endblock %}
