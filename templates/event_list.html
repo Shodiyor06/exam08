@@ -1,3 +1,8 @@
+{% extends "base.html" %}
+
+{% block title %}Eventlar{% endblock %}
+
+{% block content %}
 <h1>Eventlar</h1>
 
 {% if events %}
@@ -13,3 +18,4 @@
 {% else %}
     <p>Hozircha event yo‘q</p>
 {% endif %}
+{% endblock %}
