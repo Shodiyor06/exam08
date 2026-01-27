@@ -13,7 +13,7 @@ urlpatterns = [
     # HTML views
     path("", event_list, name='events-page'),
     path("add/", add_event, name='add-event'),
-    
+    path("registrations/", include("registrations.urls")),
     # API custom endpoints
     path("<int:event_id>/registrations-count/",
          EventRegistrationsCountView.as_view(),

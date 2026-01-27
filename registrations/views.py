@@ -79,15 +79,10 @@ def register_event(request, event_id):
 
 @login_required
 def cancel_registration(request, event_id):
-    """HTML: Cancel registration for an event"""
-    # Delete registrations where user is registered for this event
-    deleted_count, _ = Registration.objects.filter(
-        user=request.user,
-        event_id=event_id
-    ).delete()
-
-    if deleted_count == 0:
-        # User wasn't registered for this event
-        pass
-
+    if request.method == "POST":
+        Registration.objects.filter(
+            user=request.user,
+            event_id=event_id
+        ).delete()
     return redirect("/events/")
+

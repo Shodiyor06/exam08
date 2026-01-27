@@ -161,8 +161,17 @@ def add_event(request):
 
 
 
+
 def event_list(request):
     events = Event.objects.all()
-    return render(request, "event_list.html", {
-        "events": events
+    user_regs = []
+
+    if request.user.is_authenticated:
+        user_regs = Registration.objects.filter(
+            user=request.user
+        ).values_list("event_id", flat=True)
+
+    return render(request, "events/event_list.html", {
+        "events": events,
+        "user_regs": user_regs,
     })

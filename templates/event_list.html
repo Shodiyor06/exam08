@@ -1,29 +1,38 @@
 {% extends "base.html" %}
-
 {% block content %}
+
 <h1>Eventlar</h1>
 
 {% if events %}
-    <ul>
-        {% for event in events %}
-            <li style="margin-bottom:20px">
-                <strong>{{ event.title }}</strong><br>
-                {{ event.description }}<br>
-                {{ event.date }}<br>
+<ul>
+{% for event in events %}
+    <li style="margin-bottom:20px">
+        <strong>{{ event.title }}</strong><br>
+        {{ event.description }}<br>
+        {{ event.date }}<br>
 
-                {% if user.is_authenticated %}
-                    <form method="post" action="/registrations/register/{{ event.id }}/">
-                        {% csrf_token %}
-                        <button type="submit">Eventga qo‘shilish</button>
-                    </form>
-                {% else %}
-                    <a href="/login/">Login qilib qo‘shiling</a>
-                {% endif %}
-
-            </li>
-        {% endfor %}
-    </ul>
+        {% if user.is_authenticated %}
+            {% if event.id in user_regs %}
+                <!-- BEKOR QILISH -->
+                <form method="post" action="{% url 'cancel-registration' event.id %}">
+                    {% csrf_token %}
+                    <button type="submit">❌ Bekor qilish</button>
+                </form>
+            {% else %}
+                <!-- QO‘SHILISH -->
+                <form method="post" action="{% url 'register-for-event' event.id %}">
+                    {% csrf_token %}
+                    <button type="submit">✅ Eventga qo‘shilish</button>
+                </form>
+            {% endif %}
+        {% else %}
+            <a href="/login/">Login qilib qo‘shiling</a>
+        {% endif %}
+    </li>
+{% endfor %}
+</ul>
 {% else %}
-    <p>Hozircha event yo‘q</p>
+<p>Hozircha event yo‘q</p>
 {% endif %}
+
 {% endblock %}
