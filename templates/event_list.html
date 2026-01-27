@@ -12,14 +12,14 @@
                 {{ event.date }}<br>
 
                 {% if user.is_authenticated %}
-                    <form method="post" action="/registrations/">
+                    <form method="post" action="/registrations/register/{{ event.id }}/">
                         {% csrf_token %}
-                        <input type="hidden" name="event" value="{{ event.id }}">
                         <button type="submit">Eventga qo‘shilish</button>
                     </form>
                 {% else %}
                     <a href="/login/">Login qilib qo‘shiling</a>
                 {% endif %}
+
             </li>
         {% endfor %}
     </ul>
