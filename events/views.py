@@ -157,7 +157,7 @@ def add_event(request):
                 "error": f"Xatolik: {str(e)}"
             })
 
-    return render(request, "add_event.html")
+    return render(request, "templates/add_event.html")
 
 
 
@@ -171,7 +171,7 @@ def event_list(request):
             user=request.user
         ).values_list("event_id", flat=True)
 
-    return render(request, "events/event_list.html", {
+    return render(request, "templates/event_list.html", {
         "events": events,
         "user_regs": user_regs,
     })

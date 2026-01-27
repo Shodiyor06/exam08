@@ -64,11 +64,10 @@ class CancelRegistrationView(APIView):
 def register_event(request, event_id):
     """HTML: Register user for an event"""
     if request.method == "POST":
-        event_id = request.POST.get("event")
         event = get_object_or_404(Event, id=event_id)
 
         # Get or create registration
-        registration, created = Registration.objects.get_or_create(
+        Registration.objects.get_or_create(
             user=request.user,
             event=event
         )
