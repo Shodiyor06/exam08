@@ -19,20 +19,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # ===== SECURITY =====
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
-ALLOWED_HOSTS = config(
-    "ALLOWED_HOSTS",
-    cast=Csv(),
-    default="127.0.0.1,localhost"
-)
+ALLOWED_HOSTS = ["13.60.250.181"]
 
 # ===== STATIC FILES (DEFINED ONCE) =====
 STATIC_URL = "/static/"
-# STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Only add STATICFILES_DIRS if you have custom static files
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
+
 
 # ===== MEDIA FILES =====
 MEDIA_URL = "/media/"
