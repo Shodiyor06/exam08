@@ -3,7 +3,7 @@ from rest_framework.routers import DefaultRouter
 
 from .views import (EventAvailableSeatsView, EventRegistrationsCountView,
                     EventViewSet, TopEventsByRegistrationsView, add_event,
-                    events_page)
+                    event_list)
 
 # ===== ROUTER FOR ViewSet =====
 router = DefaultRouter()
@@ -11,7 +11,7 @@ router.register(r'', EventViewSet, basename='event')
 
 urlpatterns = [
     # HTML views
-    path("", events_page, name='events-page'),
+    path("", event_list, name='events-page'),
     path("add/", add_event, name='add-event'),
     
     # API custom endpoints
