@@ -16,7 +16,7 @@ urlpatterns = [
     path("login/", login_view, name='login'),
     path("register/", register_view, name='register'),
     path("logout/", logout_view, name='logout'),
-
+    
     # ===== HTML VIEWS =====
     path("events/", include("events.urls")),
     path("registrations/", include("registrations.urls")),
