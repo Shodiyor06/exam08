@@ -1,8 +1,9 @@
-from django.shortcuts import render
 from django.db.models import Count
 from django.shortcuts import render
-from registrations.models import Registration
+
 from events.models import Event
+from registrations.models import Registration
+
 
 def login_page(request):
     return render(request, "login.html")

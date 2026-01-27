@@ -1,22 +1,33 @@
 from django.contrib import admin
-from django.urls import path, include
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from accounts.views import login_view, register_view
+from django.urls import include, path
+from rest_framework_simplejwt.views import (TokenObtainPairView,
+                                            TokenRefreshView)
+
+from accounts.views import login_view, logout_view, register_view
+
 from .views import stats_page
 
 urlpatterns = [
+    # ===== ADMIN PANEL =====
     path("admin/", admin.site.urls),
 
-    path("", login_view),
-    path("login/", login_view),
-    path("register/", register_view),
+    # ===== AUTHENTICATION (HTML) =====
+    path("", login_view, name='home'),
+    path("login/", login_view, name='login'),
+    path("register/", register_view, name='register'),
+    path("logout/", logout_view, name='logout'),
 
-    path("events/", include("events.urls")),          # ✅ FAqat shu
+    # ===== HTML VIEWS =====
+    path("events/", include("events.urls")),
     path("registrations/", include("registrations.urls")),
-    path("stats/", stats_page),
+    path("stats/", stats_page, name='stats'),
 
-    # JWT
+    # ===== JWT AUTHENTICATION =====
     path("api/accounts/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/accounts/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+
+    # ===== API ENDPOINTS =====
     path("api/accounts/", include("accounts.urls")),
+    path("api/events/", include("events.urls")),
+    path("api/registrations/", include("registrations.urls")),
 ]

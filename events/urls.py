@@ -1,11 +1,28 @@
-from.views import EventViewSet, EventRegistrationsCountView, EventAvailableSeatsView, TopEventsByRegistrationsView
-from django.urls import path, include
-from .views import events_page, add_event
+from django.urls import include, path
+from rest_framework.routers import DefaultRouter
+
+from .views import (EventAvailableSeatsView, EventRegistrationsCountView,
+                    EventViewSet, TopEventsByRegistrationsView, add_event,
+                    events_page)
+
+# ===== ROUTER FOR ViewSet =====
+router = DefaultRouter()
+router.register(r'', EventViewSet, basename='event')
 
 urlpatterns = [
-    path("", events_page),
-    path("add/", add_event),
-    path("registrations-count/<int:event_id>/", EventRegistrationsCountView.as_view()),
-    path("available-seats/<int:pk>/", EventAvailableSeatsView.as_view()),
-    path("top-registrations/", TopEventsByRegistrationsView.as_view()),
+    # HTML views
+    path("", events_page, name='events-page'),
+    path("add/", add_event, name='add-event'),
+    
+    # API custom endpoints
+    path("<int:event_id>/registrations-count/",
+         EventRegistrationsCountView.as_view(),
+         name='registrations-count'),
+    path("<int:pk>/available-seats/",
+         EventAvailableSeatsView.as_view(),
+         name='available-seats'),
+    path("top-registrations/",
+         TopEventsByRegistrationsView.as_view(),
+         name='top-registrations'),
 ]
+urlpatterns += router.urls

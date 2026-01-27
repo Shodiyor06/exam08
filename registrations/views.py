@@ -1,27 +1,46 @@
-from django.shortcuts import render
-from django.shortcuts import get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, redirect, render
 from rest_framework import generics, permissions, status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated
-from .models import Registration
-from .serializers import RegistrationSerializer
-from events.models import Event
-from django.contrib.auth.decorators import login_required
+
 from events.models import Event
 
+from .models import Registration
+from .serializers import RegistrationSerializer
+
+
+# ===== API VIEWS =====
 class RegisterForEventView(generics.CreateAPIView):
+    """API: Create registration for an event"""
     serializer_class = RegistrationSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def perform_create(self, serializer):
+        """Save with current user"""
         serializer.save(user=self.request.user)
+
+    def create(self, request, *args, **kwargs):
+        """Override create to provide custom response"""
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        return Response(
+            {
+                "detail": "Registration successful",
+                "data": serializer.data
+            },
+            status=status.HTTP_201_CREATED
+        )
 
 
 class CancelRegistrationView(APIView):
+    """API: Cancel registration for an event"""
     permission_classes = [IsAuthenticated]
 
-    def patch(self, request, event_id):
+    def delete(self, request, event_id):
+        """Delete registration"""
         registration = get_object_or_404(
             Registration,
             user=request.user,
@@ -35,25 +54,44 @@ class CancelRegistrationView(APIView):
             status=status.HTTP_200_OK
         )
 
+    def patch(self, request, event_id):
+        """Support PATCH method as well (for backward compatibility)"""
+        return self.delete(request, event_id)
 
 
+# ===== HTML VIEWS =====
 @login_required
 def register_event(request, event_id):
+    """HTML: Register user for an event"""
     event = get_object_or_404(Event, id=event_id)
 
-    Registration.objects.get_or_create(
+    # Get or create registration
+    registration, created = Registration.objects.get_or_create(
         user=request.user,
         event=event
     )
+
+    if created:
+        # New registration created
+        pass
+    else:
+        # User already registered for this event
+        pass
 
     return redirect("/events/")
 
 
 @login_required
 def cancel_registration(request, event_id):
-    Registration.objects.filter(
+    """HTML: Cancel registration for an event"""
+    # Delete registrations where user is registered for this event
+    deleted_count, _ = Registration.objects.filter(
         user=request.user,
         event_id=event_id
     ).delete()
+
+    if deleted_count == 0:
+        # User wasn't registered for this event
+        pass
 
     return redirect("/events/")
