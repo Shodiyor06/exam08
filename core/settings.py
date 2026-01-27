@@ -19,7 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # ===== SECURITY =====
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
-ALLOWED_HOSTS = ["13.60.250.181"]
+ALLOWED_HOSTS = ["13.60.250.181", "localhost", "127.0.0.1"]
 
 # ===== STATIC FILES (DEFINED ONCE) =====
 STATIC_URL = "/static/"
