@@ -86,6 +86,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'core.urls'
 
+CSRF_TRUSTED_ORIGINS = [
+    "http://13.60.250.181",
+]
+
+
 # ===== TEMPLATES =====
 TEMPLATES = [
     {
