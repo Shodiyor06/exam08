@@ -111,55 +111,20 @@ def events_page(request):
         "registered_event_ids": registered_event_ids
     })
 
-
 @login_required
 def add_event(request):
-    """Add a new event (admin only)"""
-    if not request.user.is_staff:
-        return redirect("/events/")
-    
     if request.method == "POST":
-        title = request.POST.get("title", "").strip()
-        description = request.POST.get("description", "").strip()
-        event_type = request.POST.get("event_type", "ONLINE")
-        location = request.POST.get("location", "").strip()
-        capacity = request.POST.get("capacity", 0)
+        title = request.POST.get("title")
+        capacity = request.POST.get("capacity")
 
-        if not title or not capacity:
-            render(request, "add_event.html", {
-                "error": "Title va capacity majburiy"
-            })
-            return None
+        Event.objects.create(
+            title=title,
+            capacity=capacity
+        )
 
-        try:
-            capacity = int(capacity)
-            if capacity < 0:
-                raise ValueError("Capacity manfiy bo'lishi mumkin emas")
-        except ValueError:
-            return render(request, "add_event.html", {
-                "error": "Capacity raqam bo'lishi kerak"
-            })
-
-        try:
-            Event.objects.create(
-                title=title,
-                description=description,
-                event_type=event_type,
-                location=location if event_type == "OFFLINE" else None,
-                capacity=capacity,
-                created_by=request.user,
-                start_time="2026-01-28 10:00:00",
-                end_time="2026-01-28 12:00:00"
-            )
-            return redirect("/events/")
-        except Exception as e:
-            return render(request, "add_event.html", {
-                "error": f"Xatolik: {str(e)}"
-            })
+        return redirect("/events/")
 
     return render(request, "templates/add_event.html")
-
-
 
 
 def event_list(request):

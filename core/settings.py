@@ -152,5 +152,5 @@ if not DEBUG:
     CSRF_TRUSTED_ORIGINS = config(
         "CSRF_TRUSTED_ORIGINS",
         cast=Csv(),
-        default=""
+        default="True"
     )
