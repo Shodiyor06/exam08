@@ -114,17 +114,15 @@ def events_page(request):
 @login_required
 def add_event(request):
     if request.method == "POST":
-        title = request.POST.get("title")
-        capacity = request.POST.get("capacity")
-
         Event.objects.create(
-            title=title,
-            capacity=capacity
+            title=request.POST.get("title"),
+            description=request.POST.get("description"),
+            date=request.POST.get("date"),
+            capacity=request.POST.get("capacity"),
         )
-
         return redirect("/events/")
 
-    return render(request, "templates/add_event.html")
+    return render(request, "events/add_event.html")
 
 
 def event_list(request):

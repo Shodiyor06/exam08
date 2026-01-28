@@ -4,14 +4,27 @@
 
 <form method="post">
     {% csrf_token %}
+
     <p>
         Nomi:<br>
         <input type="text" name="title" required>
     </p>
+
+    <p>
+        Tavsif:<br>
+        <textarea name="description" required></textarea>
+    </p>
+
+    <p>
+        Sana:<br>
+        <input type="date" name="date" required>
+    </p>
+
     <p>
         Capacity:<br>
         <input type="number" name="capacity" required>
     </p>
+
     <button type="submit">Qo‘shish</button>
 </form>
 {% endblock %}
