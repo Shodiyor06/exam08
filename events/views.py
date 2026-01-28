@@ -122,11 +122,11 @@ def add_event(request):
             start_time=request.POST.get("start_time"),
             end_time=request.POST.get("end_time"),
             capacity=request.POST.get("capacity"),
-            created_by=request.user,   # 🔥 ENG MUHIM QATOR
+            created_by=request.user,
         )
         return redirect("/events/")
 
-    return render(request, "templates/add_event.html")
+    return render(request, "add_event.html")
 
 def event_list(request):
     events = Event.objects.all()
