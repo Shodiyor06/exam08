@@ -122,7 +122,7 @@ def add_event(request):
         )
         return redirect("/events/")
 
-    return render(request, "events/add_event.html")
+    return render(request, "templates/add_event.html")
 
 
 def event_list(request):
