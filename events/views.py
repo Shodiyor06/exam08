@@ -111,7 +111,7 @@ def events_page(request):
         "registered_event_ids": registered_event_ids
     })
 
-@@login_required
+@login_required
 def add_event(request):
     if request.method == "POST":
         Event.objects.create(
