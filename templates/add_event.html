@@ -16,13 +16,31 @@
     </p>
 
     <p>
-        Sana:<br>
-        <input type="date" name="date" required>
+        Event turi:<br>
+        <select name="event_type" required>
+            <option value="ONLINE">Online</option>
+            <option value="OFFLINE">Offline</option>
+        </select>
+    </p>
+
+    <p>
+        Joylashuv (agar offline bo‘lsa):<br>
+        <input type="text" name="location">
+    </p>
+
+    <p>
+        Boshlanish vaqti:<br>
+        <input type="datetime-local" name="start_time" required>
+    </p>
+
+    <p>
+        Tugash vaqti:<br>
+        <input type="datetime-local" name="end_time" required>
     </p>
 
     <p>
         Capacity:<br>
-        <input type="number" name="capacity" required>
+        <input type="number" name="capacity" min="1" required>
     </p>
 
     <button type="submit">Qo‘shish</button>

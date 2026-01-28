@@ -111,19 +111,22 @@ def events_page(request):
         "registered_event_ids": registered_event_ids
     })
 
-@login_required
+@@login_required
 def add_event(request):
     if request.method == "POST":
         Event.objects.create(
             title=request.POST.get("title"),
             description=request.POST.get("description"),
-            date=request.POST.get("date"),
+            event_type=request.POST.get("event_type"),
+            location=request.POST.get("location"),
+            start_time=request.POST.get("start_time"),
+            end_time=request.POST.get("end_time"),
             capacity=request.POST.get("capacity"),
+            created_by=request.user,   # 🔥 ENG MUHIM QATOR
         )
         return redirect("/events/")
 
     return render(request, "templates/add_event.html")
-
 
 def event_list(request):
     events = Event.objects.all()
