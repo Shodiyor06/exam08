@@ -62,18 +62,18 @@ class CancelRegistrationView(APIView):
 # ===== HTML VIEWS =====
 @login_required
 def register_event(request, event_id):
-    """HTML: Register user for an event"""
-    if request.method == "POST":
-        event = get_object_or_404(Event, id=event_id)
+    if request.method == "GET":
+        # Telefon yoki noto‘g‘ri ochilish bo‘lsa
+        return redirect("/events/")
 
-        # Get or create registration
-        Registration.objects.get_or_create(
-            user=request.user,
-            event=event
-        )
+    event = get_object_or_404(Event, id=event_id)
+
+    Registration.objects.get_or_create(
+        user=request.user,
+        event=event
+    )
 
     return redirect("/events/")
-
 
 
 @login_required
