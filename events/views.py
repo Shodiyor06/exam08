@@ -5,7 +5,7 @@ from rest_framework import permissions, status, viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
+from django.utils.dateparse import parse_datetime
 from registrations.models import Registration
 
 from .models import Event
@@ -115,19 +115,18 @@ def events_page(request):
 def add_event(request):
     if request.method == "POST":
         Event.objects.create(
-            title=request.POST.get("title"),
-            description=request.POST.get("description"),
-            event_type=request.POST.get("event_type"),
+            title=request.POST["title"],
+            description=request.POST["description"],
+            event_type=request.POST["event_type"],
             location=request.POST.get("location"),
-            start_time=request.POST.get("start_time"),
-            end_time=request.POST.get("end_time"),
-            capacity=request.POST.get("capacity"),
+            start_time=parse_datetime(request.POST["start_time"]),
+            end_time=parse_datetime(request.POST["end_time"]),
+            capacity=int(request.POST["capacity"]),
             created_by=request.user,
         )
         return redirect("/events/")
 
     return render(request, "add_event.html")
-
 def event_list(request):
     events = Event.objects.all()
     user_regs = []
